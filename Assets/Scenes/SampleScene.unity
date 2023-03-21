@@ -137,7 +137,7 @@ GameObject:
   - component: {fileID: 240387217}
   m_Layer: 0
   m_Name: LeftHandController
-  m_TagString: Untagged
+  m_TagString: LeftHand
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -175,7 +175,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   m_InteractionLayers:
-    m_Bits: 4294967295
+    m_Bits: 4
   m_AttachTransform: {fileID: 0}
   m_KeepSelectedTargetValid: 1
   m_StartingSelectedInteractable: {fileID: 0}
@@ -294,6 +294,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 240387216}
     m_Modifications:
+    - target: {fileID: 109434732392105323, guid: 65847589f926b734d9eaed6e25f0046b,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b569b8a59ba6cb24fbe4828eb57a305f, type: 2}
     - target: {fileID: 109434732395284509, guid: 65847589f926b734d9eaed6e25f0046b,
         type: 3}
       propertyPath: m_Name
@@ -550,6 +555,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1727738689}
     m_Modifications:
+    - target: {fileID: 25009047840678820, guid: 8e2d0f8d0b044f847926f3695a926607,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 71bab1bf1ae4cb044ad9dfb3287bc1d6, type: 2}
     - target: {fileID: 1158539201984665803, guid: 8e2d0f8d0b044f847926f3695a926607,
         type: 3}
       propertyPath: m_RootOrder
@@ -609,6 +619,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: CubeA0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1970366517519925874, guid: 8e2d0f8d0b044f847926f3695a926607,
+        type: 3}
+      propertyPath: m_InteractionLayers.m_Bits
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8e2d0f8d0b044f847926f3695a926607, type: 3}
@@ -847,6 +862,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Right Hand Model
       objectReference: {fileID: 0}
+    - target: {fileID: 5686134208196863108, guid: 1fd3a7c43c8190f4d8c167ebde694364,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 71bab1bf1ae4cb044ad9dfb3287bc1d6, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1fd3a7c43c8190f4d8c167ebde694364, type: 3}
 --- !u!4 &980962219 stripped
@@ -869,7 +889,7 @@ GameObject:
   - component: {fileID: 998847991}
   m_Layer: 0
   m_Name: RightHandController
-  m_TagString: Untagged
+  m_TagString: RightHand
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -907,14 +927,26 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   m_InteractionLayers:
-    m_Bits: 4294967295
+    m_Bits: 2
   m_AttachTransform: {fileID: 0}
   m_KeepSelectedTargetValid: 1
   m_StartingSelectedInteractable: {fileID: 0}
   m_StartingTargetFilter: {fileID: 0}
   m_HoverEntered:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 998847989}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_HoverExited:
     m_PersistentCalls:
       m_Calls: []
@@ -1717,10 +1749,20 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1727738689}
     m_Modifications:
+    - target: {fileID: 1012382449786413520, guid: 7205ab51ba64a6e4e80b2551be31bb4a,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b569b8a59ba6cb24fbe4828eb57a305f, type: 2}
     - target: {fileID: 1516666379601985541, guid: 7205ab51ba64a6e4e80b2551be31bb4a,
         type: 3}
       propertyPath: m_Name
       value: CubeA1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1516666379601985542, guid: 7205ab51ba64a6e4e80b2551be31bb4a,
+        type: 3}
+      propertyPath: m_InteractionLayers.m_Bits
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2181880382214118079, guid: 7205ab51ba64a6e4e80b2551be31bb4a,
         type: 3}
