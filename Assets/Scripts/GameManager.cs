@@ -8,14 +8,22 @@ public class GameManager : MonoBehaviour
     public Transform CubePlacesParent;
     [Header("Place Colors")]
     public Color ActiveColor;
+    public Color CorrectColor;
+
     [SerializeField]
     private List<GameObject> _cubePlaces = new List<GameObject>();
 
     //Useage bools
-    private bool chosedSocket = false;
-    private int usedSockets = 0;
+    private bool _chosedSocket = false;
+    private bool _gameFinished = false;
+    
+    private int _usedSockets = 0;
+    private int _selectedIndex;
 
     private XRSocketInteractor currentActiveSocket;
+    private MeshRenderer currentSocketMesh;
+    [SerializeField]
+    private CubeSpawner _cubeSpawner;
 
     public enum GAMESTATE
     {
@@ -24,6 +32,14 @@ public class GameManager : MonoBehaviour
         END_ROUND
     };
     private GAMESTATE _gameState = GAMESTATE.CHOOSING_SOCKET;
+
+    public enum SPAWNCUBETYPE
+    {
+        AUTO,
+        MANUAL
+    };
+    public SPAWNCUBETYPE _spawnCubeType = SPAWNCUBETYPE.AUTO;
+
     private void Awake()
     {
         foreach( Transform child in CubePlacesParent)
@@ -35,46 +51,57 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        _cubeSpawner = GetComponent<CubeSpawner>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        switch (_gameState)
+        if (!_gameFinished)
         {
-            case GAMESTATE.CHOOSING_SOCKET:
-                if (!chosedSocket) {
-                    Debug.Log("STATE: Chosing Socket");
-                    ChooseSocket();
-                    chosedSocket = true;
-                }
-                break;
-            case GAMESTATE.WAITING_PLAYER:
-                //Debug.Log("STATE: Waiting Player to put the cube");
-                WaitingPlayer();
-                break;
-            case GAMESTATE.END_ROUND:
-                EndRound();
-                break;
-            default:
-                break;
+            switch (_gameState)
+            {
+                case GAMESTATE.CHOOSING_SOCKET:
+                    if (!_chosedSocket)
+                    {
+                        //Debug.Log("STATE: Chosing Socket");
+                        ChooseSocket();
+                        _chosedSocket = true;
+                    }
+                    break;
+                case GAMESTATE.WAITING_PLAYER:
+                    //Debug.Log("STATE: Waiting Player to put the cube");
+                    WaitingPlayer();
+                    break;
+                case GAMESTATE.END_ROUND:
+                    EndRound();
+                    break;
+                default:
+                    break;
+            }
+        }
+        
+        if(_cubePlaces.Count == 0)
+        {
+            //List Is empty, all cube places used
+            //Debug.Log("GAME FINISHED");
+            _gameFinished = true;
         }
     }
 
-
+    #region STATE FUNCTIONS
     private void ChooseSocket()
     {
         //Select one place from the list
-        int selectedIndex = Random.Range(0, _cubePlaces.Count);
+        _selectedIndex = Random.Range(0, _cubePlaces.Count);
         //Check for already used sockets and not repete them.
         //Activate the socketInteractor
-        currentActiveSocket = _cubePlaces[selectedIndex].GetComponent<XRSocketInteractor>();
+        currentActiveSocket = _cubePlaces[_selectedIndex].GetComponent<XRSocketInteractor>();
         currentActiveSocket.socketActive = true;
         //Change the color of the mesh
-        MeshRenderer socketMesh = _cubePlaces[selectedIndex].GetComponent<MeshRenderer>();
-        socketMesh.material.color = ActiveColor;
-
+        ChangeCubePlaceColor(_selectedIndex, ActiveColor);
+        //For automatic spawn cubes when needed
+        if(_spawnCubeType == SPAWNCUBETYPE.AUTO)_cubeSpawner.SpawnCube();
         ChangeGameState(GAMESTATE.WAITING_PLAYER);
     }
     private void WaitingPlayer()
@@ -82,7 +109,7 @@ public class GameManager : MonoBehaviour
         //When the user puts the cube in place we jump of state to the next one
         if (currentActiveSocket.hasSelection)
         {
-            Debug.Log("SELECTION ACHIVED");
+            //Debug.Log("SELECTION ACHIVED");
             ChangeGameState(GAMESTATE.END_ROUND);
         }
     }
@@ -91,13 +118,21 @@ public class GameManager : MonoBehaviour
         //Give Some feedback to the player
         //EG: PLay sound and vibration TODO
         //Activate for choose another socket
-        chosedSocket = false;
+        _chosedSocket = false;
         //Update the number of cubes used
-        usedSockets += 1;
+        _usedSockets += 1;
+        ChangeCubePlaceColor(_selectedIndex, CorrectColor);
+        _cubePlaces.Remove(currentActiveSocket.gameObject);
         //JUmp to the first state
         ChangeGameState(GAMESTATE.CHOOSING_SOCKET);
     }
-
+    #endregion
+    #region OTHER FUNCTIONS
+    private void ChangeCubePlaceColor(int selectedIndex, Color newColor)
+    {
+        currentSocketMesh = _cubePlaces[selectedIndex].GetComponent<MeshRenderer>();
+        currentSocketMesh.material.color = newColor;
+    }
     public void ChangeGameState(GAMESTATE newState)
     {
         _gameState = newState;
@@ -116,4 +151,5 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Interactable SELECT ENTER");
     }
+    #endregion
 }
