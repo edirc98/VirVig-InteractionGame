@@ -18,7 +18,6 @@ public class AnimateHand : MonoBehaviour
     void Update()
     {
         float triggerValue = triggerAnimationAction.action.ReadValue<float>();
-        Debug.Log(triggerValue);
         HandAnimator.SetFloat("Trigger", triggerValue);
         float gripValue = gripAnimationAction.action.ReadValue<float>();
         HandAnimator.SetFloat("Grip", gripValue);
