@@ -56,22 +56,22 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (currentLevelPrefab == null)
-        {
-            //Spawn the corresponding level acording to currentLevel
-            currentLevelPrefab = Instantiate(GameManagerLevels.GameLevels[currentLevel].LevelPrefab);
-            GetCubePlacesObjects(currentLevelPrefab.transform);
-            //Check type of Level to set the type of spawn needed
-            if (GameManagerLevels.GameLevels[currentLevel].levelType == Level.LevelType.COLORS)
-            {
-                _spawnCubeType = SPAWNCUBETYPE.AUTO;
-            }
-            else _spawnCubeType = SPAWNCUBETYPE.NONE;
-            _levelFinished = false;
-            GameTimer.StartTimer();
-        }
         if (!_gameFinished)
         {
+            if (currentLevelPrefab == null)
+            {
+                //Spawn the corresponding level acording to currentLevel
+                currentLevelPrefab = Instantiate(GameManagerLevels.GameLevels[currentLevel].LevelPrefab);
+                GetCubePlacesObjects(currentLevelPrefab.transform);
+                //Check type of Level to set the type of spawn needed
+                if (GameManagerLevels.GameLevels[currentLevel].levelType == Level.LevelType.COLORS)
+                {
+                    _spawnCubeType = SPAWNCUBETYPE.AUTO;
+                }
+                else _spawnCubeType = SPAWNCUBETYPE.NONE;
+                _levelFinished = false;
+                GameTimer.StartTimer();
+            }
             if (!_levelFinished)
             {
                 switch (_gameState)
@@ -172,7 +172,10 @@ public class GameManager : MonoBehaviour
     {
         foreach (Transform child in parentObjectTransform)
         {
-            _cubePlaces.Add(child.gameObject);
+            if (child.CompareTag("CubePlace"))
+            {
+                _cubePlaces.Add(child.gameObject);
+            }
         }
     }
     //private void disableSockets()

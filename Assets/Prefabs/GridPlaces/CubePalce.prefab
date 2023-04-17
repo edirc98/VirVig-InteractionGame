@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5776942472148234365}
   m_Layer: 0
   m_Name: CubePalce
-  m_TagString: Untagged
+  m_TagString: CubePlace
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
