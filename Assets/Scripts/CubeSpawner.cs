@@ -28,4 +28,12 @@ public class CubeSpawner : MonoBehaviour
     {
         Instantiate(CubePrefabs[PrefabIndex], SpawnPoints[SpawnPointIndex].position, Quaternion.identity, CubesParent);
     }
+
+    public void DestroySpawnedCubes()
+    {
+        foreach (Transform cube in CubesParent)
+        {
+            Destroy(cube.gameObject);
+        }
+    }
 }

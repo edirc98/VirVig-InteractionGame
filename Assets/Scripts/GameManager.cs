@@ -5,16 +5,21 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class GameManager : MonoBehaviour
 {
-    public Transform CubePlacesParent;
     [Header("Place Colors")]
     public Color ActiveColor;
     public Color CorrectColor;
+
+    public Levels GameManagerLevels;
+    public int currentLevel = 0;
+    [SerializeField]
+    private GameObject currentLevelPrefab = null;
 
     [SerializeField]
     private List<GameObject> _cubePlaces = new List<GameObject>();
 
     //Useage bools
     private bool _chosedSocket = false;
+    private bool _levelFinished = false;
     private bool _gameFinished = false;
     
     private int _usedSockets = 0;
@@ -36,18 +41,11 @@ public class GameManager : MonoBehaviour
     public enum SPAWNCUBETYPE
     {
         AUTO,
-        MANUAL
+        MANUAL,
+        NONE
     };
     public SPAWNCUBETYPE _spawnCubeType = SPAWNCUBETYPE.AUTO;
 
-    private void Awake()
-    {
-        foreach( Transform child in CubePlacesParent)
-        {
-            _cubePlaces.Add(child.gameObject);
-        }
-        disableSockets();
-    }
     // Start is called before the first frame update
     void Start()
     {
@@ -57,36 +55,64 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (currentLevelPrefab == null)
+        {
+            //Spawn the corresponding level acording to currentLevel
+            currentLevelPrefab = Instantiate(GameManagerLevels.GameLevels[currentLevel].LevelPrefab);
+            GetCubePlacesObjects(currentLevelPrefab.transform);
+            //Check type of Level to set the type of spawn needed
+            if (GameManagerLevels.GameLevels[currentLevel].levelType == Level.LevelType.COLORS)
+            {
+                _spawnCubeType = SPAWNCUBETYPE.AUTO;
+            }
+            else _spawnCubeType = SPAWNCUBETYPE.NONE;
+            _levelFinished = false;
+            
+        }
         if (!_gameFinished)
         {
-            switch (_gameState)
+            if (!_levelFinished)
             {
-                case GAMESTATE.CHOOSING_SOCKET:
-                    if (!_chosedSocket)
-                    {
-                        //Debug.Log("STATE: Chosing Socket");
-                        ChooseSocket();
-                        _chosedSocket = true;
-                    }
-                    break;
-                case GAMESTATE.WAITING_PLAYER:
-                    //Debug.Log("STATE: Waiting Player to put the cube");
-                    WaitingPlayer();
-                    break;
-                case GAMESTATE.END_ROUND:
-                    EndRound();
-                    break;
-                default:
-                    break;
+                switch (_gameState)
+                {
+                    case GAMESTATE.CHOOSING_SOCKET:
+                        if (!_chosedSocket)
+                        {
+                            //Debug.Log("STATE: Chosing Socket");
+                            ChooseSocket();
+                            _chosedSocket = true;
+                        }
+                        break;
+                    case GAMESTATE.WAITING_PLAYER:
+                        //Debug.Log("STATE: Waiting Player to put the cube");
+                        WaitingPlayer();
+                        break;
+                    case GAMESTATE.END_ROUND:
+                        EndRound();
+                        break;
+                    default:
+                        break;
+                }
             }
+            
         }
         
         if(_cubePlaces.Count == 0)
         {
             //List Is empty, all cube places used
-            //Debug.Log("GAME FINISHED");
-            _gameFinished = true;
+            _levelFinished = true;
+            Destroy(currentLevelPrefab);
+            _cubeSpawner.DestroySpawnedCubes();
+            currentLevelPrefab = null;
+            Debug.Log("Level " + currentLevel + "finished");
+            currentLevel++;
         }
+        if (currentLevel == GameManagerLevels.GameLevels.Count)
+        {
+            _gameFinished = true;
+            Debug.Log("Game Finished");
+        }
+
     }
 
     #region STATE FUNCTIONS
@@ -138,14 +164,22 @@ public class GameManager : MonoBehaviour
         _gameState = newState;
     }
 
-    private void disableSockets()
+
+    private void GetCubePlacesObjects(Transform parentObjectTransform)
     {
-        foreach(GameObject cube in _cubePlaces)
+        foreach (Transform child in parentObjectTransform)
         {
-            XRSocketInteractor socket = cube.GetComponent<XRSocketInteractor>();
-            socket.socketActive = false;
+            _cubePlaces.Add(child.gameObject);
         }
     }
+    //private void disableSockets()
+    //{
+    //    foreach(GameObject cube in _cubePlaces)
+    //    {
+    //        XRSocketInteractor socket = cube.GetComponent<XRSocketInteractor>();
+    //        socket.socketActive = false;
+    //    }
+    //}
 
     public void TestMesage()
     {
