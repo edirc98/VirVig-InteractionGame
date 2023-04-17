@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public Color CorrectColor;
 
     public Levels GameManagerLevels;
+    public Timer GameTimer;
     public int currentLevel = 0;
     [SerializeField]
     private GameObject currentLevelPrefab = null;
@@ -67,7 +68,7 @@ public class GameManager : MonoBehaviour
             }
             else _spawnCubeType = SPAWNCUBETYPE.NONE;
             _levelFinished = false;
-            
+            GameTimer.StartTimer();
         }
         if (!_gameFinished)
         {
@@ -106,6 +107,8 @@ public class GameManager : MonoBehaviour
             currentLevelPrefab = null;
             Debug.Log("Level " + currentLevel + "finished");
             currentLevel++;
+            GameTimer.StopTimer();
+            GameTimer.ResetTimer();
         }
         if (currentLevel == GameManagerLevels.GameLevels.Count)
         {
