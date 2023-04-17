@@ -95,21 +95,20 @@ public class GameManager : MonoBehaviour
                         break;
                 }
             }
-            
+            if (_cubePlaces.Count == 0)
+            {
+                //List Is empty, all cube places used
+                _levelFinished = true;
+                Destroy(currentLevelPrefab);
+                _cubeSpawner.DestroySpawnedCubes();
+                currentLevelPrefab = null;
+                Debug.Log("Level " + currentLevel + "finished");
+                currentLevel++;
+                GameTimer.StopTimer();
+                GameTimer.ResetTimer();
+            }
         }
         
-        if(_cubePlaces.Count == 0)
-        {
-            //List Is empty, all cube places used
-            _levelFinished = true;
-            Destroy(currentLevelPrefab);
-            _cubeSpawner.DestroySpawnedCubes();
-            currentLevelPrefab = null;
-            Debug.Log("Level " + currentLevel + "finished");
-            currentLevel++;
-            GameTimer.StopTimer();
-            GameTimer.ResetTimer();
-        }
         if (currentLevel == GameManagerLevels.GameLevels.Count)
         {
             _gameFinished = true;
