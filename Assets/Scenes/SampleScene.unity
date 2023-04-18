@@ -1440,6 +1440,30 @@ MonoBehaviour:
     levelType: 1
     LevelPrefab: {fileID: 6179514393951014489, guid: 45f212d407abcd249850ecf817de3fde,
       type: 3}
+  - LevelName: Level4
+    levelType: 1
+    LevelPrefab: {fileID: 2072097597821761994, guid: 75c9ba4fefb898045bac9d5c4e4cdf8b,
+      type: 3}
+  - LevelName: Level5
+    levelType: 1
+    LevelPrefab: {fileID: 2877228503815259311, guid: bde555463fd3f3a48a7b8f20ec638b33,
+      type: 3}
+  - LevelName: Level6
+    levelType: 1
+    LevelPrefab: {fileID: 7764694939978063657, guid: c930034132750f6408bc69b307d9497d,
+      type: 3}
+  - LevelName: Level7
+    levelType: 1
+    LevelPrefab: {fileID: 6433787005292994876, guid: d7f5998e1ea6cdc4b8f9d99d75e88671,
+      type: 3}
+  - LevelName: Level8
+    levelType: 1
+    LevelPrefab: {fileID: 1572396959595012985, guid: 1451c9dbc029fa9488bfd5cc762e9f2e,
+      type: 3}
+  - LevelName: Level9
+    levelType: 1
+    LevelPrefab: {fileID: 5354359452429850457, guid: 927c8e5a32332c14d97e26712ee2eeb2,
+      type: 3}
 --- !u!65 &878617029
 BoxCollider:
   m_ObjectHideFlags: 0
