@@ -15,6 +15,9 @@ public class CodeValidator : MonoBehaviour
     [SerializeField]
     private XRSocketInteractor _socket;
 
+    [SerializeField]
+    private AudioSource _audioSource;
+
     private TMPro.TextMeshPro _placeCodeText;
     private TMPro.TextMeshPro _cubeCodeText;
 
