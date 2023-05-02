@@ -106,7 +106,7 @@ public class GameManager : MonoBehaviour
                 {
                     //List Is empty, all cube places used
                     _levelFinished = true;
-                    Destroy(currentLevelPrefab,1.0f);
+                    Destroy(currentLevelPrefab,0.5f);
                     _cubeSpawner.DestroySpawnedCubes();
                     currentLevelPrefab = null;
                     //Debug.Log("Level " + currentLevel + "finished");
