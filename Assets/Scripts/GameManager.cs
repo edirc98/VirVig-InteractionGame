@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
     public Levels GameManagerLevels;
     public Timer GameTimer;
     public int currentLevel = 0;
+
+    public GameObject ContinueModal;
     [SerializeField]
     private GameObject currentLevelPrefab = null;
 
@@ -23,6 +25,7 @@ public class GameManager : MonoBehaviour
     private bool _chosedSocket = false;
     private bool _levelFinished = false;
     private bool _gameFinished = false;
+    private bool _instanceNextLevel = true;
     
     private int _usedSockets = 0;
     private int _selectedIndex;
@@ -61,7 +64,7 @@ public class GameManager : MonoBehaviour
         {
             if (!_gameFinished)
             {
-                if (currentLevelPrefab == null)
+                if (currentLevelPrefab == null && _instanceNextLevel)
                 {
                     //Spawn the corresponding level acording to currentLevel
                     currentLevelPrefab = Instantiate(GameManagerLevels.GameLevels[currentLevel].LevelPrefab);
@@ -72,7 +75,8 @@ public class GameManager : MonoBehaviour
                         _spawnCubeType = SPAWNCUBETYPE.AUTO;
                     }
                     else _spawnCubeType = SPAWNCUBETYPE.NONE;
-                    _levelFinished = false;
+                    //_levelFinished = false;
+                    _instanceNextLevel = false;
                     GameTimer.StartTimer();
                 }
                 if (!_levelFinished)
@@ -102,11 +106,11 @@ public class GameManager : MonoBehaviour
                 {
                     //List Is empty, all cube places used
                     _levelFinished = true;
-                    Destroy(currentLevelPrefab);
+                    Destroy(currentLevelPrefab,1.0f);
                     _cubeSpawner.DestroySpawnedCubes();
                     currentLevelPrefab = null;
-                    Debug.Log("Level " + currentLevel + "finished");
-                    currentLevel++;
+                    //Debug.Log("Level " + currentLevel + "finished");
+                    ContinueModal.SetActive(true);
                     GameTimer.StopTimer();
                     GameTimer.ResetTimer();
                 }
@@ -183,6 +187,13 @@ public class GameManager : MonoBehaviour
     public void StartGame()
     {
         _startGame = true;
+    }
+    public void ContinueGame()
+    {
+        _levelFinished = false;
+        _instanceNextLevel = true;
+        currentLevel++;
+        ContinueModal.SetActive(false);
     }
 
     public void TestMesage()
