@@ -13,10 +13,13 @@ public class GameManager : MonoBehaviour
     public Timer GameTimer;
     public int currentLevel = 0;
 
+    public GameObject StartModal;
     public GameObject ContinueModal;
+
+    public AudioSource BGMusic;
+
     [SerializeField]
     private GameObject currentLevelPrefab = null;
-
     [SerializeField]
     private List<GameObject> _cubePlaces = new List<GameObject>();
 
@@ -184,9 +187,21 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public IEnumerator StartGameAfterSecs()
+    {
+        yield return new WaitForSeconds(1.0f);
+        StartGame();
+    }
+    public IEnumerator ContinueGameAfterSecs()
+    {
+        yield return new WaitForSeconds(1.0f);
+        ContinueGame();
+    }
     public void StartGame()
     {
         _startGame = true;
+        BGMusic.Play();
+        StartModal.SetActive(false);
     }
     public void ContinueGame()
     {

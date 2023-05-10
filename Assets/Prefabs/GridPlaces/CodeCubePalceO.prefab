@@ -379,6 +379,7 @@ MonoBehaviour:
     m_Bits: 6
   m_AttachTransform: {fileID: 0}
   m_KeepSelectedTargetValid: 1
+  m_DisableVisualsWhenBlockedInGroup: 1
   m_StartingSelectedInteractable: {fileID: 0}
   m_StartingTargetFilter: {fileID: 0}
   m_HoverEntered:
@@ -453,7 +454,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: c6a2533eb9c2bed4ab6653081a168466, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 5c5f0888aa022ff48b5fed042708f473, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
