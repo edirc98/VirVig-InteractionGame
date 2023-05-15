@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -15,6 +16,9 @@ public class GameManager : MonoBehaviour
 
     public GameObject StartModal;
     public GameObject ContinueModal;
+    [Header("Continue Modal Texts")]
+    public Text HeaderText;
+    public Text TimeText;
 
     public AudioSource BGMusic;
 
@@ -113,8 +117,10 @@ public class GameManager : MonoBehaviour
                     _cubeSpawner.DestroySpawnedCubes();
                     currentLevelPrefab = null;
                     //Debug.Log("Level " + currentLevel + "finished");
-                    ContinueModal.SetActive(true);
+                    
                     GameTimer.StopTimer();
+                    UpdateContinueModal();
+                    ContinueModal.SetActive(true);
                     GameTimer.ResetTimer();
                 }
             }
@@ -209,6 +215,12 @@ public class GameManager : MonoBehaviour
         _instanceNextLevel = true;
         currentLevel++;
         ContinueModal.SetActive(false);
+    }
+
+    public  void UpdateContinueModal()
+    {
+        HeaderText.text = GameManagerLevels.GameLevels[currentLevel].LevelName + " completed!";
+        TimeText.text = "In: " + GameTimer.GetTime();
     }
 
     public void TestMesage()

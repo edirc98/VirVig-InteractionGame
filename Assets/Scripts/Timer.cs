@@ -8,6 +8,7 @@ public class Timer : MonoBehaviour
     [SerializeField]
     private TMPro.TextMeshPro _TimerText;
     private bool _timerCounting = false;
+    private string timeFormated;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,7 +24,7 @@ public class Timer : MonoBehaviour
 
             int minutes = Mathf.FloorToInt(timer / 60F);
             int seconds = Mathf.FloorToInt(timer - minutes * 60);
-            string timeFormated = string.Format("{0:00}:{1:00}", minutes, seconds);
+            timeFormated = string.Format("{0:00}:{1:00}", minutes, seconds);
             _TimerText.text = timeFormated;
         }
     }
@@ -35,6 +36,10 @@ public class Timer : MonoBehaviour
     public void StopTimer()
     {
         _timerCounting = false;
+    }
+    public string GetTime()
+    {
+        return timeFormated;
     }
     
     public void ResetTimer()

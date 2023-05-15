@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7764694939978063656}
   m_Layer: 0
-  m_Name: Level6
+  m_Name: LeterLVL6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
