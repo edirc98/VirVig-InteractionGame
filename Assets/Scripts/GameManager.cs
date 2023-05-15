@@ -76,6 +76,7 @@ public class GameManager : MonoBehaviour
                     //Spawn the corresponding level acording to currentLevel
                     currentLevelPrefab = Instantiate(GameManagerLevels.GameLevels[currentLevel].LevelPrefab);
                     GetCubePlacesObjects(currentLevelPrefab.transform);
+                    disableSockets();
                     //Check type of Level to set the type of spawn needed
                     if (GameManagerLevels.GameLevels[currentLevel].levelType == Level.LevelType.COLORS)
                     {
@@ -202,6 +203,15 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(1.0f);
         ContinueGame();
+    }
+
+    private void disableSockets()
+    {
+        foreach (GameObject cube in _cubePlaces)
+        {
+            XRSocketInteractor socket = cube.GetComponent<XRSocketInteractor>();
+            socket.socketActive = false;
+        }
     }
     public void StartGame()
     {
